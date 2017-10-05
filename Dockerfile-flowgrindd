@@ -1,4 +1,4 @@
-FROM mukerjee/sdrt-vhost
+FROM mukerjee/sdrt-base
 
 MAINTAINER Matt Mukerjee "mukerjee@cs.cmu.edu"
 
