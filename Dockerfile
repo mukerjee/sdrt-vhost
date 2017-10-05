@@ -3,29 +3,33 @@ FROM ubuntu
 MAINTAINER Matt Mukerjee "mukerjee@cs.cmu.edu"
 
 RUN apt-get update && apt-get install -y \
-                              # openjdk-7-jdk \
-                              # maven \
-                              iperf \
-                              iperf3 \
+                              software-properties-common
+RUN add-apt-repository ppa:openjdk-r/ppa 
+RUN apt-get update && apt-get install -y \
                               net-tools \
                               iputils-ping \
+			      autoconf \
+			      gcc \
+			      cmake \
+                              openjdk-7-jdk \
+                              maven \			    
+                              iperf \
+                              iperf3 \
+			      flowgrind \
     && rm -rf /var/lib/apt/lists/*
 
-# ADD https://github.com/intel-hadoop/HiBench/archive/master.tar.gz $HOME/HiBench.tar.gz
-# RUN tar xfz $HOME/HiBench.tar.gz $HOME/
+ADD https://github.com/intel-hadoop/HiBench/archive/master.tar.gz /tmp/HiBench.tar.gz
+WORKDIR /root
+RUN tar xfz /tmp/HiBench.tar.gz && mv HiBench-master HiBench
 
-ADD https://github.com/flowgrind/flowgrind/archive/master.tar.gz $HOME/flowgrind.tar.gz
-RUN tar xfz $HOME/flowgrind.tar.gz $HOME/
-RUN cd $HOME/flowgrind
-RUN autoreconf -i
-RUN ./configure
-RUN make -j
+ADD https://github.com/mukerjee/sdrt/archive/master.tar.gz /tmp/sdrt.tar.gz
+WORKDIR /root
+RUN tar xfz /tmp/sdrt.tar.gz && mv sdrt-master sdrt
+WORKDIR /root/sdrt/adu-send/lib
+RUN make -j install
 
-ADD https://github.com/mukerjee/sdrt/archive/master.tar.gz $HOME/sdrt.tar.gz
-RUN tar xfz $HOME/sdrt/tar.gz $HOME/
-RUN cd $HOME/sdrt/send-adu/lib
-RUN make install -j
+RUN rm /tmp/*.tar.gz
 
-WORKDIR $HOME
+WORKDIR /root/
 ENTRYPOINT ["flowgrind"]
 CMD ["--help"]
