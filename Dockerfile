@@ -31,5 +31,5 @@ RUN make -j install
 RUN rm /tmp/*.tar.gz
 
 WORKDIR /root/
-ENTRYPOINT ["flowgrind"]
-CMD ["--help"]
+ENTRYPOINT ["flowgrindd"]
+CMD ["-d"]
