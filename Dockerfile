@@ -19,7 +19,7 @@ RUN wget https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework \
 # build SDRT adu-send
 WORKDIR /root
 RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
-    && tar xfvz master.tar.gz \
+    && tar xfz master.tar.gz \
     && cd sdrt-master/adu-send/lib \
     && make -j install \
     && cd /root \
