@@ -1,9 +1,0 @@
-FROM mukerjee/sdrt-base
-
-MAINTAINER Matt Mukerjee "mukerjee@cs.cmu.edu"
-
-RUN apt-get update && apt-get install -y \
-                              iperf \
-    && rm -rf /var/lib/apt/lists/*
-
-CMD pipework --wait && pipework --wait -i eth2 && iperf -s
