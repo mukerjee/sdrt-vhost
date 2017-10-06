@@ -35,8 +35,7 @@ RUN apt-get update && apt-get install -y \
 			      flowgrind \
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["flowgrindd"]
-CMD ["-d"]
+CMD pipework --wait && pipework --wait -i eth2 && flowgrindd -d
 
 
 ###############
@@ -49,8 +48,7 @@ RUN apt-get update && apt-get install -y \
 			      iperf \
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["iperf"]
-CMD ["-d"]
+CMD pipework --wait && pipework --wait -i eth2 && iperf -s
 
 
 ###############
@@ -63,8 +61,7 @@ RUN apt-get update && apt-get install -y \
 			      iperf3 \
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["iperf3"]
-CMD ["-d"]
+CMD pipework --wait && pipework --wait -i eth2 && iperf3 -s
 
 
 ###############
@@ -86,3 +83,5 @@ RUN wget https://github.com/intel-hadoop/HiBench/archive/master.tar.gz \
     && tar xfz master.tar.gz \
     && mv HiBench-master HiBench \
     && rm master.tar.gz
+
+CMD pipework --wait && pipework --wait -i eth2
