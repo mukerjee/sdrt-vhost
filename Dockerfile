@@ -1,7 +1,7 @@
 ###############
 ## Base image
 ###############
-FROM ubuntu AS sdrt-base
+FROM ubuntu AS base
 
 MAINTAINER Matt Mukerjee "mukerjee@cs.cmu.edu"
 
@@ -29,9 +29,9 @@ RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
 ###############
 ## flowgrindd
 ###############
-FROM ubuntu AS sdrt-flowgrindd
-COPY --from=sdrt-base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=sdrt-base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+FROM ubuntu AS flowgrindd
+COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
+COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 RUN apt-get update && apt-get install -y \
 			      flowgrind \
     && rm -rf /var/lib/apt/lists/*
@@ -42,9 +42,9 @@ CMD pipework --wait && pipework --wait -i eth2 && flowgrindd -d
 ###############
 ## iperf
 ###############
-FROM ubuntu AS sdrt-iperf
-COPY --from=sdrt-base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=sdrt-base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+FROM ubuntu AS iperf
+COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
+COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 RUN apt-get update && apt-get install -y \
 			      iperf \
     && rm -rf /var/lib/apt/lists/*
@@ -55,9 +55,9 @@ CMD pipework --wait && pipework --wait -i eth2 && iperf -s
 ###############
 ## iperf3
 ###############
-FROM ubuntu AS sdrt-iperf3
-COPY --from=sdrt-base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=sdrt-base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+FROM ubuntu AS iperf3
+COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
+COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 RUN apt-get update && apt-get install -y \
 			      iperf3 \
     && rm -rf /var/lib/apt/lists/*
@@ -68,9 +68,9 @@ CMD pipework --wait && pipework --wait -i eth2 && iperf3 -s
 ###############
 ## hadoop
 ###############
-FROM ubuntu AS sdrt-hadoop
-COPY --from=sdrt-base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=sdrt-base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+FROM ubuntu AS hadoop
+COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
+COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 RUN apt-get update && apt-get install -y \
                               software-properties-common
 RUN add-apt-repository ppa:openjdk-r/ppa 
