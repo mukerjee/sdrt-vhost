@@ -6,5 +6,4 @@ RUN apt-get update && apt-get install -y \
 			      flowgrind \
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["flowgrindd"]
-CMD ["-d"]
+CMD pipework --wait && pipework --wait -i eth2 && flowgrindd -d

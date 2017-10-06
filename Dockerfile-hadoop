@@ -15,3 +15,5 @@ WORKDIR /root
 RUN tar xfz /tmp/HiBench.tar.gz && mv HiBench-master HiBench
 
 RUN rm /tmp/*.tar.gz
+
+CMD pipework --wait && pipework --wait -i eth2
