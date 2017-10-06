@@ -8,6 +8,7 @@ MAINTAINER Matt Mukerjee "mukerjee@cs.cmu.edu"
 RUN apt-get update && apt-get install -y \
                               gcc \
                               cmake \
+                              wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Install pipework
@@ -75,7 +76,8 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository ppa:openjdk-r/ppa 
 RUN apt-get update && apt-get install -y \
                               openjdk-7-jdk \
-                              maven \			    
+                              maven \
+                              wget \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
