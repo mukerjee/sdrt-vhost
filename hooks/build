@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build --target=$IMAGE_NAME -t $IMAGE_NAME
+docker build --target=$IMAGE_NAME -t $IMAGE_NAME .
