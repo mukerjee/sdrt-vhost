@@ -32,13 +32,16 @@ RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
 FROM ubuntu AS flowgrindd
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
 COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
-COPY on_run.sh .
-RUN chmod +x on_run.sh
+COPY on_run.sh /root/
+RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
                               flowgrind \
     && rm -rf /var/lib/apt/lists/*
 
-CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && flowgrindd -d
+CMD pipework --wait \
+    && pipework --wait -i eth2 \
+    && /root/on_run.sh \
+    && flowgrindd -d
 
 
 ###############
@@ -47,13 +50,16 @@ CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && flowgrindd -d
 FROM ubuntu AS iperf
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
 COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
-COPY on_run.sh .
-RUN chmod +x on_run.sh
+COPY on_run.sh /root/
+RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
                               iperf \
     && rm -rf /var/lib/apt/lists/*
 
-CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && iperf -s
+CMD pipework --wait \
+    && pipework --wait -i eth2 \
+    && /root/on_run.sh \
+    && iperf -s
 
 
 ###############
@@ -62,13 +68,16 @@ CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && iperf -s
 FROM ubuntu AS iperf3
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
 COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
-COPY on_run.sh .
-RUN chmod +x on_run.sh
+COPY on_run.sh /root/
+RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
                               iperf3 \
     && rm -rf /var/lib/apt/lists/*
 
-CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && iperf3 -s
+CMD pipework --wait \
+    && pipework --wait -i eth2 \
+    && /root/on_run.sh \
+    && iperf3 -s
 
 
 ###############
@@ -77,8 +86,8 @@ CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && iperf3 -s
 FROM ubuntu AS hadoop
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
 COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
-COPY on_run.sh .
-RUN chmod +x on_run.sh
+COPY on_run.sh /root/
+RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
                               software-properties-common
 RUN add-apt-repository ppa:openjdk-r/ppa 
@@ -94,4 +103,6 @@ RUN wget https://github.com/intel-hadoop/HiBench/archive/master.tar.gz \
     && mv HiBench-master HiBench \
     && rm master.tar.gz
 
-CMD pipework --wait && pipework --wait -i eth2 && on_run.sh
+CMD pipework --wait \
+    && pipework --wait -i eth2 \
+    && /root/on_run.sh
