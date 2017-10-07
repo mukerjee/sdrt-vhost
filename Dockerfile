@@ -35,7 +35,7 @@ COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 COPY on_run.sh .
 RUN apt-get update && apt-get install -y \
                               flowgrind \
-                              iputils-ping
+                              iputils-ping \
     && rm -rf /var/lib/apt/lists/*
 
 CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && flowgrindd -d
@@ -50,7 +50,7 @@ COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 COPY on_run.sh .
 RUN apt-get update && apt-get install -y \
                               iperf \
-                              iputils-ping
+                              iputils-ping \
     && rm -rf /var/lib/apt/lists/*
 
 CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && iperf -s
@@ -65,7 +65,7 @@ COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 COPY on_run.sh .
 RUN apt-get update && apt-get install -y \
                               iperf3 \
-                              iputils-ping
+                              iputils-ping \
     && rm -rf /var/lib/apt/lists/*
 
 CMD pipework --wait && pipework --wait -i eth2 && on_run.sh && iperf3 -s
@@ -85,7 +85,7 @@ RUN apt-get update && apt-get install -y \
                               openjdk-7-jdk \
                               maven \
                               wget \
-                              iputils-ping
+                              iputils-ping \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
