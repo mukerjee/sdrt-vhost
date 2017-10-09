@@ -38,10 +38,11 @@ RUN apt-get update && apt-get install -y \
                               flowgrind \
     && rm -rf /var/lib/apt/lists/*
 
-CMD pipework --wait \
-    && pipework --wait -i eth2 \
-    && /root/on_run.sh \
-    && flowgrindd -d
+ENTRYPOINT pipework --wait \
+           && pipework --wait -i eth2 \
+           && /root/on_run.sh \
+           && flowgrindd -d -c
+CMD 1
 
 
 ###############
@@ -78,6 +79,25 @@ CMD pipework --wait \
     && pipework --wait -i eth2 \
     && /root/on_run.sh \
     && iperf3 -s
+
+
+###############
+## netperf
+###############
+FROM ubuntu AS iperf3
+COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
+COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+COPY on_run.sh /root/
+RUN chmod +x /root/on_run.sh
+RUN echo deb http://us.archive.ubuntu.com/ubuntu/ xenial multiverse | sudo tee -a /etc/apt/sources.list \
+    && echo deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates multiverse | sudo tee -a /etc/apt/sources.list
+RUN apt-get update && apt-get install -y \
+                              netperf \
+    && rm -rf /var/lib/apt/lists/*
+
+CMD pipework --wait \
+    && pipework --wait -i eth2 \
+    && /root/on_run.sh
 
 
 ###############
