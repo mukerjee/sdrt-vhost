@@ -84,7 +84,7 @@ CMD pipework --wait \
 ###############
 ## netperf
 ###############
-FROM ubuntu AS iperf3
+FROM ubuntu AS netperf
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
 COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
 COPY on_run.sh /root/
