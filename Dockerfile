@@ -41,7 +41,7 @@ RUN apt-get update && apt-get install -y \
 CMD pipework --wait \
     && pipework --wait -i eth2 \
     && /root/on_run.sh \
-    && flowgrind -d
+    && flowgrindd -d
 
 
 ###############
