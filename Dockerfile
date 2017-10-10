@@ -41,8 +41,8 @@ RUN apt-get update && apt-get install -y \
 ENTRYPOINT pipework --wait \
            && pipework --wait -i eth2 \
            && /root/on_run.sh \
-           && flowgrindd -d -c
-CMD 1
+           &&
+CMD taskset -c 1 flowgrindd -d -c 1
 
 
 ###############
