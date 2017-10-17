@@ -25,6 +25,7 @@ RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
     && cd /root \
     && wget https://github.com/mukerjee/libVT/archive/master.tar.gz \
     && tar xfz master.tar.gz \
+    && ls \
     && cd libVT-master \
     && make install \
     && cd /root \
