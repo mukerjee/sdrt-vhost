@@ -24,12 +24,11 @@ RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
     && make -j install \
     && cd /root \
     && wget https://github.com/mukerjee/libVT/archive/master.tar.gz \
-    && tar xfz master.tar.gz \
-    && ls \
+    && tar xfz master.tar.gz.1 \
     && cd libVT-master \
     && make install \
     && cd /root \
-    && rm -rf sdrt-master libVT-master master.tar.gz
+    && rm -rf sdrt-master libVT-master master.tar.gz master.tar.gz.1
 
 
 ###############
