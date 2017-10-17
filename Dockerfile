@@ -22,6 +22,8 @@ RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
     && tar xfz master.tar.gz \
     && cd sdrt-master/adu-send/lib \
     && make -j install \
+    && cd /root/sdrt-master/libVT \
+    && make -j install \
     && cd /root \
     && rm -rf sdrt-master master.tar.gz
 
@@ -31,7 +33,8 @@ RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
 ###############
 FROM ubuntu AS flowgrindd
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+COPY --from=base /usr/lib/adu-send.so /usr/lib/adu-send.so
+COPY --from=base /usr/lib/libVT.so /usr/lib/libVT.so
 COPY on_run.sh /root/
 RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
@@ -49,7 +52,8 @@ CMD pipework --wait \
 ###############
 FROM ubuntu AS iperf
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+COPY --from=base /usr/lib/adu-send.so /usr/lib/adu-send.so
+COPY --from=base /usr/lib/libVT.so /usr/lib/libVT.so
 COPY on_run.sh /root/
 RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
@@ -67,7 +71,8 @@ CMD pipework --wait \
 ###############
 FROM ubuntu AS iperf3
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+COPY --from=base /usr/lib/adu-send.so /usr/lib/adu-send.so
+COPY --from=base /usr/lib/libVT.so /usr/lib/libVT.so
 COPY on_run.sh /root/
 RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
@@ -85,7 +90,8 @@ CMD pipework --wait \
 ###############
 FROM ubuntu AS netperf
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+COPY --from=base /usr/lib/adu-send.so /usr/lib/adu-send.so
+COPY --from=base /usr/lib/libVT.so /usr/lib/libVT.so
 COPY on_run.sh /root/
 RUN chmod +x /root/on_run.sh
 RUN echo deb http://us.archive.ubuntu.com/ubuntu/ xenial multiverse | sudo tee -a /etc/apt/sources.list \
@@ -104,7 +110,8 @@ CMD pipework --wait \
 ###############
 FROM ubuntu AS hadoop
 COPY --from=base /usr/local/bin/pipework /usr/local/bin/pipework
-COPY --from=base /usr/local/lib/adu-send.so /usr/local/lib/adu-send.so
+COPY --from=base /usr/lib/adu-send.so /usr/lib/adu-send.so
+COPY --from=base /usr/lib/libVT.so /usr/lib/libVT.so
 COPY on_run.sh /root/
 RUN chmod +x /root/on_run.sh
 RUN apt-get update && apt-get install -y \
