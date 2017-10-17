@@ -22,12 +22,13 @@ RUN wget https://github.com/mukerjee/sdrt/archive/master.tar.gz \
     && tar xfz master.tar.gz \
     && cd sdrt-master/adu-send/lib \
     && make -j install \
-    && cd /root/sdrt-master/libVT \
-    && ls /root \
-    && cat Makefile \
-    && make -j install \
     && cd /root \
-    && rm -rf sdrt-master master.tar.gz
+    && wget https://github.com/mukerjee/libVT/archive/master.tar.gz \
+    && tar xfz master.tar.gz \
+    && cd libVT-master \
+    && make install \
+    && cd /root \
+    && rm -rf sdrt-master libVT-master master.tar.gz
 
 
 ###############
