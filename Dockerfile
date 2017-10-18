@@ -97,8 +97,8 @@ COPY --from=base /usr/lib/adu-send.so /usr/lib/adu-send.so
 COPY --from=base /usr/lib/libVT.so /usr/lib/libVT.so
 COPY on_run.sh /root/
 RUN chmod +x /root/on_run.sh
-RUN echo deb http://us.archive.ubuntu.com/ubuntu/ xenial multiverse | sudo tee -a /etc/apt/sources.list \
-    && echo deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates multiverse | sudo tee -a /etc/apt/sources.list
+RUN echo deb http://us.archive.ubuntu.com/ubuntu/ xenial multiverse | tee -a /etc/apt/sources.list \
+    && echo deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates multiverse | tee -a /etc/apt/sources.list
 RUN apt-get update && apt-get install -y \
                               netperf \
     && rm -rf /var/lib/apt/lists/*
