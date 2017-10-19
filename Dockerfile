@@ -47,7 +47,7 @@ RUN apt-get update && apt-get install -y \
 CMD pipework --wait \
     && pipework --wait -i eth2 \
     && /root/on_run.sh \
-    && flowgrindd -d
+    && LD_PRELOAD=libVT.so flowgrindd -d
 
 
 ###############
@@ -66,7 +66,7 @@ RUN apt-get update && apt-get install -y \
 CMD pipework --wait \
     && pipework --wait -i eth2 \
     && /root/on_run.sh \
-    && iperf -s
+    && LD_PRELOAD=libVT.so iperf -s
 
 
 ###############
@@ -85,7 +85,7 @@ RUN apt-get update && apt-get install -y \
 CMD pipework --wait \
     && pipework --wait -i eth2 \
     && /root/on_run.sh \
-    && iperf3 -s
+    && LD_PRELOAD=libVT.so iperf3 -s
 
 
 ###############
@@ -105,7 +105,9 @@ RUN apt-get update && apt-get install -y \
 
 CMD pipework --wait \
     && pipework --wait -i eth2 \
-    && /root/on_run.sh
+    && /root/on_run.sh \
+    && pgrep netserver | xargs sudo kill \
+    && sudo LD_PRELOAD=libVT.so netserver
 
 
 ###############
